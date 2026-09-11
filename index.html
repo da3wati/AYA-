@@ -300,6 +300,24 @@ main {
   opacity:.82;
 }
 
+
+.rsvp { min-height:88svh; text-align:center; background:linear-gradient(180deg,#f7f2ea,#e9dfd0); }
+.rsvp-card { width:min(100%,650px); padding:42px 24px; border-radius:38px; background:rgba(251,248,242,.78); border:1px solid rgba(154,118,61,.25); box-shadow:0 20px 60px rgba(82,59,31,.10); backdrop-filter:blur(10px); }
+.rsvp h2 { margin:0 0 12px; }
+.rsvp-intro { font-size:20px; line-height:1.9; margin:0 0 25px; }
+#rsvpForm { display:grid; gap:10px; text-align:right; }
+#rsvpForm > label,.rsvp-status>label { font-size:18px; color:#765d37; }
+#rsvpForm input[type=text],#rsvpForm select { width:100%; height:54px; border-radius:16px; border:1px solid rgba(154,118,61,.28); background:rgba(255,255,255,.7); color:#654d2e; font-family:inherit; font-size:17px; padding:0 16px; outline:none; }
+.status-options { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:8px; }
+.status-option { position:relative; cursor:pointer; }
+.status-option input { position:absolute; opacity:0; }
+.status-option span { min-height:54px; padding:10px; border-radius:16px; border:1px solid rgba(154,118,61,.25); background:rgba(255,255,255,.58); display:flex; align-items:center; justify-content:center; text-align:center; font-size:16px; transition:.25s; }
+.status-option input:checked+span { border-color:rgba(154,118,61,.7); background:rgba(214,195,165,.22); }
+#rsvpSubmit { margin-top:10px; height:56px; border:1px solid rgba(154,118,61,.65); border-radius:18px; background:linear-gradient(135deg,#d8c09a,#b38c50); color:#fffaf1; font-family:inherit; font-size:20px; cursor:pointer; }
+#rsvpSubmit:disabled { opacity:.6; cursor:wait; }
+.rsvp-message { min-height:28px; margin:8px 0 0; text-align:center; font-size:17px; }
+@media(max-width:560px){.status-options{grid-template-columns:1fr;}}
+
 .ending {
   min-height:70svh;
   text-align:center;
@@ -380,7 +398,9 @@ main {
 <button id="musicBtn" class="music" aria-label="تشغيل أو إيقاف الموسيقى">♫</button>
 
 <audio id="weddingAudio" preload="auto" loop>
+  <!-- ضع ملف الموسيقى بجانب HTML باسم wedding.mp3 ثم فعّل السطر التالي:
   <source src="wedding.mp3" type="audio/mpeg">
+  -->
 </audio>
 
 <main>
@@ -429,10 +449,6 @@ main {
 
 <section class="image-section">
   <img class="full-art" src="program.webp" alt="برنامج يوم الزفاف">
-</section>
-
-<section class="image-section">
-  <img class="full-art" src="" alt="برنامج يوم الزفاف">
 </section>
 
 <section class="section gallery">
@@ -485,6 +501,32 @@ main {
   </div>
 </section>
 
+<section id="rsvp" class="section rsvp">
+  <div class="rsvp-card reveal">
+    <h2>تأكيد الحضور</h2>
+    <p class="rsvp-intro">يسعدنا أن تشاركونا فرحتنا، ونرجو تأكيد حضوركم.</p>
+    <form id="rsvpForm" autocomplete="off">
+      <label for="guestName">الاسم واللقب</label>
+      <input id="guestName" name="name" type="text" placeholder="اكتب الاسم واللقب" required>
+      <label for="guestCount">عدد الأشخاص</label>
+      <select id="guestCount" name="guests" required>
+        <option value="" selected disabled>اختر العدد</option>
+        <option>1</option><option>2</option><option>3</option><option>4</option><option>5</option>
+        <option>6</option><option>7</option><option>8</option><option>9</option><option>10</option>
+      </select>
+      <div class="rsvp-status">
+        <label>حالة الحضور</label>
+        <div class="status-options">
+          <label class="status-option"><input type="radio" name="status" value="حاضر" required><span>سأحضر بكل سرور</span></label>
+          <label class="status-option"><input type="radio" name="status" value="معتذر" required><span>أعتذر عن الحضور</span></label>
+        </div>
+      </div>
+      <button id="rsvpSubmit" type="submit">تأكيد الحضور</button>
+      <p id="rsvpMessage" class="rsvp-message" role="status"></p>
+    </form>
+  </div>
+</section>
+
 <section class="section ending">
   <div class="reveal">
     <div class="ornament"><span></span></div>
@@ -512,17 +554,13 @@ function startInvitation() {
   cover.classList.add('hide');
   musicBtn.classList.add('show');
 
-  // تشغيل الموسيقى مباشرة بعد نقرة المستخدم على الغلاف.
-  audio.currentTime = 0;
-  audio.play()
-    .then(() => {
-      audioReady = true;
-      musicBtn.textContent = '♫';
-    })
-    .catch(() => {
-      // في حال رفض المتصفح التشغيل، يبقى زر الموسيقى متاحاً للمحاولة مرة أخرى.
-      musicBtn.textContent = '♪';
-    });
+  // إذا تمت إضافة wedding.mp3، يبدأ التشغيل بعد نقرة المستخدم.
+  audio.play().then(() => {
+    audioReady = true;
+    musicBtn.textContent = '♫';
+  }).catch(() => {
+    musicBtn.textContent = '♪';
+  });
 
   setTimeout(() => {
     document.querySelector('.intro .reveal')?.classList.add('visible');
@@ -530,11 +568,6 @@ function startInvitation() {
 }
 
 cover.addEventListener('click', startInvitation, { once:true });
-
-audio.addEventListener('error', () => {
-  musicBtn.textContent = '♪';
-  console.warn('لم يتم العثور على wedding.mp3 أو تعذر تحميل ملف الموسيقى.');
-});
 
 musicBtn.addEventListener('click', async () => {
   if (audio.paused) {
@@ -600,6 +633,28 @@ const observer = new IntersectionObserver((entries) => {
 }, { threshold: 0.16 });
 
 document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+const RSVP_URL = "https://script.google.com/macros/s/AKfycbwMSFIv9CmDLMeQkstq5VSsyqeU63kV8s7TqfPp8vd84RBJoslvomwI4YmFCvGLRxZ9/exec";
+const rsvpForm = document.getElementById("rsvpForm");
+const rsvpSubmit = document.getElementById("rsvpSubmit");
+const rsvpMessage = document.getElementById("rsvpMessage");
+if (rsvpForm) {
+  rsvpForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const name = document.getElementById("guestName").value.trim();
+    const guests = document.getElementById("guestCount").value;
+    const status = rsvpForm.querySelector('input[name="status"]:checked')?.value;
+    if (!name || !guests || !status) { rsvpMessage.textContent = "يرجى إكمال جميع المعلومات."; return; }
+    rsvpSubmit.disabled = true; rsvpSubmit.textContent = "جارٍ تسجيل الحضور..."; rsvpMessage.textContent = "";
+    try {
+      const response = await fetch(RSVP_URL,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify({name,guests,status})});
+      const result = await response.json();
+      if (!result.success) throw new Error(result.message || "تعذر تسجيل الحضور");
+      rsvpMessage.textContent = "تم تأكيد حضوركم بنجاح 🤍"; rsvpForm.reset();
+    } catch(err) { console.error(err); rsvpMessage.textContent = "تعذر تسجيل الحضور حالياً. يرجى المحاولة مرة أخرى."; }
+    finally { rsvpSubmit.disabled=false; rsvpSubmit.textContent="تأكيد الحضور"; }
+  });
+}
 </script>
 
 </body>
