@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#eee7dc">
+<title>دعوة زفاف آية — 30 ديسمبر 2026</title>
+
+<!--
+  دعوة زفاف آية
+  الستايل: عاجي/بيج فاتح + ذهبي فاتح + لمسات صحراوية ناعمة.
+  ملاحظة: ضع الملفات التالية بجانب ملف HTML بنفس الأسماء:
+  cover.webp, location.webp, program.webp,
+  gallery1.jpg, gallery2.jpg, gallery3.jpg, gallery4.jpg, wedding.mp3.
+  قسم الخصوصية والخاتمة مكتوبان داخل الكود ولا يحتاجان إلى صور.
+-->
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Amiri+Quran&family=Cormorant+Garamond:wght@400;500;600&display=swap');
+
+:root {
+  --ivory: #f3eee5;
+  --cream: #fbf8f2;
+  --sand: #ded0b9;
+  --gold: #c8a66b;
+  --gold-dark: #9a763d;
+  --ink: #654d2e;
+  --soft: rgba(154,118,61,.16);
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; background: var(--ivory); }
+body {
+  margin: 0;
+  background:
+    radial-gradient(circle at 20% 10%, rgba(255,255,255,.8), transparent 32%),
+    linear-gradient(180deg, #f6f1e8 0%, #eee6d9 100%);
+  color: var(--ink);
+  font-family: "Amiri Quran", "Amiri", serif;
+  overflow-x: hidden;
+}
+
+body.locked { overflow: hidden; }
+
+img { display:block; width:100%; height:auto; }
+
+#cover {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  width: 100vw;
+  height: 100svh;
+  height: 100dvh;
+  background: #f1eadf;
+  cursor: pointer;
+  transition: opacity .9s ease, visibility .9s ease, transform 1s cubic-bezier(.22,.61,.36,1);
+}
+#cover.hide {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: scale(1.035);
+}
+#cover img {
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  object-position:center;
+}
+.cover-hint {
+  position:absolute;
+  left:50%;
+  bottom:max(28px, env(safe-area-inset-bottom));
+  transform:translateX(-50%);
+  padding:12px 22px;
+  border:1px solid rgba(154,118,61,.75);
+  border-radius:999px;
+  background:rgba(251,248,242,.76);
+  backdrop-filter:blur(10px);
+  color:var(--gold-dark);
+  font-size:17px;
+  white-space:nowrap;
+  box-shadow:0 10px 30px rgba(80,55,25,.12);
+  animation: breathe 2.2s ease-in-out infinite;
+}
+@keyframes breathe { 50% { transform:translateX(-50%) translateY(-4px); } }
+
+main {
+  max-width: 780px;
+  margin:0 auto;
+  position:relative;
+}
+
+.section {
+  position:relative;
+  min-height: 92svh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:72px 20px;
+  overflow:hidden;
+}
+.section::before {
+  content:"";
+  position:absolute;
+  inset:20px;
+  border:1px solid rgba(154,118,61,.18);
+  border-radius:48% 48% 40% 40% / 22% 22% 18% 18%;
+  pointer-events:none;
+}
+
+.intro {
+  min-height: 92svh;
+  text-align:center;
+  background:
+    radial-gradient(circle at 15% 15%, rgba(255,255,255,.9), transparent 28%),
+    radial-gradient(circle at 90% 80%, rgba(214,195,165,.28), transparent 30%);
+}
+.intro::after {
+  content:"";
+  position:absolute;
+  inset:auto -15% -9% -15%;
+  height:34%;
+  background:
+    radial-gradient(ellipse at 50% 100%, rgba(193,157,99,.24), transparent 65%);
+  pointer-events:none;
+}
+.intro-content {
+  position:relative;
+  z-index:2;
+  width:min(100%,650px);
+}
+.bismillah {
+  font-size:clamp(28px,7vw,46px);
+  color:var(--gold-dark);
+  margin-bottom:28px;
+}
+.verse {
+  font-size:clamp(18px,4.7vw,27px);
+  line-height:2.2;
+  margin:0 auto 34px;
+  color:#715a3a;
+}
+.invite {
+  font-size:clamp(21px,5.2vw,31px);
+  line-height:1.95;
+  margin:0;
+}
+.family {
+  color:var(--gold-dark);
+  font-weight:700;
+  font-size:clamp(28px,7vw,43px);
+}
+.bride {
+  color:#a27b3f;
+  font-size:clamp(46px,12vw,78px);
+  line-height:1.25;
+  margin:8px 0;
+  font-weight:700;
+}
+.date {
+  font-family:"Cormorant Garamond", serif;
+  direction:ltr;
+  font-size:clamp(24px,6vw,36px);
+  letter-spacing:2px;
+  color:var(--gold-dark);
+  margin-top:24px;
+}
+
+.countdown {
+  min-height:62svh;
+  background:rgba(255,255,255,.22);
+  text-align:center;
+}
+.countdown h2, .gallery h2, .privacy h2, .ending h2 {
+  margin:0 0 30px;
+  font-size:clamp(30px,7vw,46px);
+  color:var(--gold-dark);
+}
+.countdown-grid {
+  width:min(100%,650px);
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:10px;
+}
+.time-card {
+  padding:20px 8px;
+  border-radius:24px;
+  background:rgba(251,248,242,.8);
+  border:1px solid rgba(154,118,61,.22);
+  box-shadow:0 12px 35px rgba(86,62,30,.07);
+}
+.time-value {
+  font-family:"Cormorant Garamond", serif;
+  font-size:clamp(34px,9vw,54px);
+  line-height:1;
+  color:var(--gold-dark);
+}
+.time-label { margin-top:9px; font-size:15px; }
+
+.image-section {
+  padding:0;
+  min-height:auto;
+  background:#eee7dc;
+}
+.full-art {
+  width:100%;
+  height:auto;
+  object-fit:cover;
+}
+.image-section::before { display:none; }
+
+.gallery {
+  min-height:86svh;
+  display:block;
+  padding-top:76px;
+  text-align:center;
+}
+.gallery-sub {
+  font-size:20px;
+  margin-top:-18px;
+  margin-bottom:30px;
+  opacity:.8;
+}
+.gallery-frame {
+  width:100%;
+  overflow:hidden;
+  border-radius:28px;
+  border:1px solid rgba(154,118,61,.35);
+  background:#e6dccd;
+  box-shadow:0 18px 55px rgba(82,59,31,.12);
+}
+.gallery-track {
+  display:flex;
+  direction:ltr;
+  transition:transform .65s cubic-bezier(.22,.61,.36,1);
+}
+.slide {
+  min-width:100%;
+  aspect-ratio:3/4;
+  position:relative;
+  overflow:hidden;
+}
+.slide img {
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  transform:scale(1.01);
+  transition:transform 1.2s ease;
+}
+.slide.active img { transform:scale(1.045); }
+.dots {
+  display:flex;
+  justify-content:center;
+  gap:8px;
+  margin-top:18px;
+}
+.dot {
+  width:7px; height:7px; border-radius:50%;
+  background:rgba(154,118,61,.25);
+  transition:.3s ease;
+}
+.dot.active { width:22px; border-radius:99px; background:var(--gold-dark); }
+
+.privacy {
+  min-height:88svh;
+  text-align:center;
+}
+.privacy-card {
+  width:min(100%,650px);
+  padding:48px 24px;
+  border-radius:36px;
+  background:rgba(251,248,242,.68);
+  border:1px solid rgba(154,118,61,.22);
+  box-shadow:0 18px 55px rgba(82,59,31,.08);
+  backdrop-filter:blur(8px);
+}
+.camera {
+  width:112px;
+  height:112px;
+  margin:0 auto 28px;
+  border-radius:50%;
+  display:grid;
+  place-items:center;
+  border:1px solid rgba(154,118,61,.55);
+  color:var(--gold-dark);
+  font-size:52px;
+  background:radial-gradient(circle, rgba(214,195,165,.22), transparent 70%);
+  animation: softPulse 2.6s ease-in-out infinite;
+}
+@keyframes softPulse { 50% { transform:scale(1.035); box-shadow:0 0 0 12px rgba(154,118,61,.04); } }
+.privacy-text {
+  font-size:clamp(20px,5vw,29px);
+  line-height:2;
+  margin:0;
+}
+.privacy-note {
+  margin:28px 0 0;
+  font-size:18px;
+  opacity:.82;
+}
+
+.ending {
+  min-height:70svh;
+  text-align:center;
+  background:
+    radial-gradient(circle at 50% 10%, rgba(255,255,255,.9), transparent 34%),
+    linear-gradient(180deg, #f7f2ea, #e9dfd0);
+}
+.ending p {
+  font-size:clamp(22px,5.5vw,32px);
+  line-height:1.9;
+  margin:0 0 18px;
+}
+.ending .bride { margin:0; }
+.ornament {
+  margin:28px auto;
+  width:100px;
+  height:34px;
+  position:relative;
+}
+.ornament::before, .ornament::after {
+  content:"";
+  position:absolute;
+  top:16px;
+  width:40px;
+  height:1px;
+  background:rgba(154,118,61,.7);
+}
+.ornament::before { right:0; }
+.ornament::after { left:0; }
+.ornament span {
+  position:absolute; left:50%; top:5px;
+  transform:translateX(-50%) rotate(45deg);
+  width:18px; height:18px;
+  border:1px solid rgba(154,118,61,.7);
+}
+
+.music {
+  position:fixed;
+  z-index:50;
+  left:18px;
+  bottom:max(18px, env(safe-area-inset-bottom));
+  width:48px; height:48px;
+  border-radius:50%;
+  border:1px solid rgba(154,118,61,.5);
+  background:rgba(251,248,242,.86);
+  color:var(--gold-dark);
+  backdrop-filter:blur(10px);
+  box-shadow:0 10px 25px rgba(82,59,31,.12);
+  font-size:20px;
+  cursor:pointer;
+  display:none;
+}
+.music.show { display:block; }
+
+.reveal {
+  opacity:0;
+  transform:translateY(28px);
+  transition:opacity .9s ease, transform .9s ease;
+}
+.reveal.visible { opacity:1; transform:none; }
+
+@media (max-width:560px) {
+  .section { padding-left:16px; padding-right:16px; }
+  .countdown-grid { gap:7px; }
+  .time-card { padding:17px 5px; }
+  .time-label { font-size:13px; }
+}
+</style>
+</head>
+
+<body class="locked">
+
+<div id="cover" aria-label="اضغط لفتح الدعوة">
+  <img src="cover.webp" alt="غلاف دعوة زفاف آية">
+  <div class="cover-hint">اضغط لفتح الدعوة</div>
+</div>
+
+<button id="musicBtn" class="music" aria-label="تشغيل أو إيقاف الموسيقى">♫</button>
+
+<audio id="weddingAudio" preload="auto" loop>
+  <!-- ضع ملف الموسيقى بجانب HTML باسم wedding.mp3 ثم فعّل السطر التالي:
+  <source src="wedding.mp3" type="audio/mpeg">
+  -->
+</audio>
+
+<main>
+
+<section class="section intro">
+  <div class="intro-content reveal">
+    <div class="bismillah">بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ</div>
+
+    <p class="verse">
+      ﴿وَمِنْ آيَاتِهِ أَنْ خَلَقَ لَكُمْ مِنْ أَنْفُسِكُمْ أَزْوَاجًا
+      لِّتَسْكُنُوا إِلَيْهَا وَجَعَلَ بَيْنَكُم مَّوَدَّةً وَرَحْمَةً﴾
+    </p>
+
+    <p class="invite">
+      بكل الحب والفرح،<br>
+      تتشرف عائلة
+    </p>
+
+    <div class="family">نصيرة محمود</div>
+
+    <p class="invite">
+      بدعوتكم لمشاركتها فرحة زفاف<br>
+      ابنتها البكر
+    </p>
+
+    <div class="bride">آية</div>
+    <div class="date">30 ديسمبر 2026</div>
+  </div>
+</section>
+
+<section class="section countdown">
+  <div class="reveal">
+    <h2>باقي على فرحتنا</h2>
+    <div class="countdown-grid">
+      <div class="time-card"><div id="days" class="time-value">00</div><div class="time-label">الأيام</div></div>
+      <div class="time-card"><div id="hours" class="time-value">00</div><div class="time-label">الساعات</div></div>
+      <div class="time-card"><div id="minutes" class="time-value">00</div><div class="time-label">الدقائق</div></div>
+      <div class="time-card"><div id="seconds" class="time-value">00</div><div class="time-label">الثواني</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="image-section">
+  <img class="full-art" src="location.webp" alt="مكان الحفل">
+</section>
+
+<section class="image-section">
+  <img class="full-art" src="program.webp" alt="برنامج يوم الزفاف">
+</section>
+
+<section class="image-section">
+  <img class="full-art" src="" alt="برنامج يوم الزفاف">
+</section>
+
+<section class="section gallery">
+  <div class="reveal" style="width:100%;">
+    <h2>معرض الصور</h2>
+    <p class="gallery-sub">ذكريات تجمعنا... وفرحة تكتمل بوجودكم</p>
+
+    <div class="gallery-frame">
+      <div id="galleryTrack" class="gallery-track">
+        <div class="slide active"><img src="gallery1.jpg" alt="الصورة رقم 1"></div>
+        <div class="slide"><img src="gallery2.jpg" alt="الصورة رقم 2"></div>
+        <div class="slide"><img src="gallery3.jpg" alt="الصورة رقم 3"></div>
+        <div class="slide"><img src="gallery4.jpg" alt="الصورة رقم 4"></div>
+      </div>
+    </div>
+
+    <div id="dots" class="dots" aria-hidden="true">
+      <span class="dot active"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span>
+    </div>
+  </div>
+</section>
+
+
+
+
+<section class="section privacy">
+  <div class="privacy-card reveal">
+    <div class="privacy-icon" aria-hidden="true">
+      <span class="camera-body"></span>
+      <span class="camera-lens"></span>
+      <span class="camera-flash"></span>
+      <span class="privacy-slash"></span>
+    </div>
+
+    <h2>خصوصية فرحتنا</h2>
+
+    <p class="privacy-text">
+      حرصاً على خصوصية العروس والمعازيم،<br>
+      نرجو منكم التكرم بعدم التصوير<br>
+      أو نشر الصور ومقاطع الفيديو خلال الحفل.
+    </p>
+
+    <p class="privacy-note">
+      شكراً لتفهمكم واحترامكم لرغبة العريس 🤍
+    </p>
+
+    <div class="privacy-ornament" aria-hidden="true">
+      <span></span>
+    </div>
+  </div>
+</section>
+
+<section class="section ending">
+  <div class="reveal">
+    <div class="ornament"><span></span></div>
+    <h2>وجودكم أجمل ما تكتمل به فرحتنا 🤍</h2>
+    <div class="bride">آية</div>
+    <div class="date">30 ديسمبر 2026</div>
+    <div class="ornament"><span></span></div>
+  </div>
+</section>
+
+</main>
+
+<script>
+/* =========================
+   1) فتح الدعوة + الموسيقى
+   ========================= */
+const cover = document.getElementById('cover');
+const audio = document.getElementById('weddingAudio');
+const musicBtn = document.getElementById('musicBtn');
+
+let audioReady = false;
+
+function startInvitation() {
+  document.body.classList.remove('locked');
+  cover.classList.add('hide');
+  musicBtn.classList.add('show');
+
+  // إذا تمت إضافة wedding.mp3، يبدأ التشغيل بعد نقرة المستخدم.
+  audio.play().then(() => {
+    audioReady = true;
+    musicBtn.textContent = '♫';
+  }).catch(() => {
+    musicBtn.textContent = '♪';
+  });
+
+  setTimeout(() => {
+    document.querySelector('.intro .reveal')?.classList.add('visible');
+  }, 350);
+}
+
+cover.addEventListener('click', startInvitation, { once:true });
+
+musicBtn.addEventListener('click', async () => {
+  if (audio.paused) {
+    try { await audio.play(); musicBtn.textContent = '♫'; }
+    catch(e) {}
+  } else {
+    audio.pause();
+    musicBtn.textContent = '🔇';
+  }
+});
+
+/* =========================
+   2) العداد
+   ========================= */
+const target = new Date('2026-12-30T00:00:00+01:00').getTime();
+
+function updateCountdown() {
+  const now = Date.now();
+  let diff = target - now;
+  if (diff < 0) diff = 0;
+
+  const days = Math.floor(diff / 86400000);
+  const hours = Math.floor((diff % 86400000) / 3600000);
+  const minutes = Math.floor((diff % 3600000) / 60000);
+  const seconds = Math.floor((diff % 60000) / 1000);
+
+  document.getElementById('days').textContent = String(days).padStart(2,'0');
+  document.getElementById('hours').textContent = String(hours).padStart(2,'0');
+  document.getElementById('minutes').textContent = String(minutes).padStart(2,'0');
+  document.getElementById('seconds').textContent = String(seconds).padStart(2,'0');
+}
+updateCountdown();
+setInterval(updateCountdown, 1000);
+
+/* =========================
+   3) معرض الصور — كل ثانية
+   ========================= */
+const track = document.getElementById('galleryTrack');
+const slides = [...document.querySelectorAll('.slide')];
+const dots = [...document.querySelectorAll('.dot')];
+let currentSlide = 0;
+
+function showSlide(index) {
+  currentSlide = index;
+  track.style.transform = `translateX(-${index * 100}%)`;
+  slides.forEach((s,i) => s.classList.toggle('active', i === index));
+  dots.forEach((d,i) => d.classList.toggle('active', i === index));
+}
+
+setInterval(() => {
+  showSlide((currentSlide + 1) % slides.length);
+}, 1000);
+
+/* =========================
+   4) ظهور الأقسام بسلاسة
+   ========================= */
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.16 });
+
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
