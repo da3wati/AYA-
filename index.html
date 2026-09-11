@@ -397,10 +397,8 @@ main {
 
 <button id="musicBtn" class="music" aria-label="تشغيل أو إيقاف الموسيقى">♫</button>
 
-<audio id="weddingAudio" preload="auto" loop>
-  <!-- ضع ملف الموسيقى بجانب HTML باسم wedding.mp3 ثم فعّل السطر التالي:
-  <source src="wedding.mp3" type="audio/mpeg">
-  -->
+<audio id="weddingAudio" preload="auto" loop playsinline>
+  <source src="https://raw.githubusercontent.com/da3wati/AYA-/refs/heads/main/wedding.mp3" type="audio/mpeg">
 </audio>
 
 <main>
@@ -554,11 +552,13 @@ function startInvitation() {
   cover.classList.add('hide');
   musicBtn.classList.add('show');
 
-  // إذا تمت إضافة wedding.mp3، يبدأ التشغيل بعد نقرة المستخدم.
+  // التشغيل يبدأ مباشرة بعد نقرة المستخدم على الغلاف.
+  audio.load();
   audio.play().then(() => {
     audioReady = true;
     musicBtn.textContent = '♫';
-  }).catch(() => {
+  }).catch((error) => {
+    console.error("تعذر تشغيل الموسيقى:", error);
     musicBtn.textContent = '♪';
   });
 
