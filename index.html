@@ -380,9 +380,7 @@ main {
 <button id="musicBtn" class="music" aria-label="تشغيل أو إيقاف الموسيقى">♫</button>
 
 <audio id="weddingAudio" preload="auto" loop>
-  <!-- ضع ملف الموسيقى بجانب HTML باسم wedding.mp3 ثم فعّل السطر التالي:
   <source src="wedding.mp3" type="audio/mpeg">
-  -->
 </audio>
 
 <main>
@@ -514,13 +512,17 @@ function startInvitation() {
   cover.classList.add('hide');
   musicBtn.classList.add('show');
 
-  // إذا تمت إضافة wedding.mp3، يبدأ التشغيل بعد نقرة المستخدم.
-  audio.play().then(() => {
-    audioReady = true;
-    musicBtn.textContent = '♫';
-  }).catch(() => {
-    musicBtn.textContent = '♪';
-  });
+  // تشغيل الموسيقى مباشرة بعد نقرة المستخدم على الغلاف.
+  audio.currentTime = 0;
+  audio.play()
+    .then(() => {
+      audioReady = true;
+      musicBtn.textContent = '♫';
+    })
+    .catch(() => {
+      // في حال رفض المتصفح التشغيل، يبقى زر الموسيقى متاحاً للمحاولة مرة أخرى.
+      musicBtn.textContent = '♪';
+    });
 
   setTimeout(() => {
     document.querySelector('.intro .reveal')?.classList.add('visible');
@@ -528,6 +530,11 @@ function startInvitation() {
 }
 
 cover.addEventListener('click', startInvitation, { once:true });
+
+audio.addEventListener('error', () => {
+  musicBtn.textContent = '♪';
+  console.warn('لم يتم العثور على wedding.mp3 أو تعذر تحميل ملف الموسيقى.');
+});
 
 musicBtn.addEventListener('click', async () => {
   if (audio.paused) {
