@@ -398,7 +398,7 @@ main {
 <button id="musicBtn" class="music" aria-label="تشغيل أو إيقاف الموسيقى">♫</button>
 
 <audio id="weddingAudio" preload="auto" loop playsinline>
-  <source src="https://raw.githubusercontent.com/da3wati/AYA-/refs/heads/main/wedding.mp3" type="audio/mpeg">
+  <source src="wedding.mp3" type="audio/mpeg">
 </audio>
 
 <main>
@@ -547,32 +547,35 @@ const musicBtn = document.getElementById('musicBtn');
 
 let audioReady = false;
 
-function startInvitation() {
+async function startInvitation() {
   document.body.classList.remove('locked');
   cover.classList.add('hide');
   musicBtn.classList.add('show');
 
-  // التشغيل يبدأ مباشرة بعد نقرة المستخدم على الغلاف.
-  audio.load();
-  audio.play().then(() => {
+  // wedding.mp3 يجب أن يكون في نفس مجلد ملف HTML.
+  try {
+    audio.load();
+    await audio.play();
     audioReady = true;
     musicBtn.textContent = '♫';
-  }).catch((error) => {
-    console.error("تعذر تشغيل الموسيقى:", error);
+  } catch (error) {
+    console.error('Music playback failed:', error);
     musicBtn.textContent = '♪';
-  });
-
-  setTimeout(() => {
-    document.querySelector('.intro .reveal')?.classList.add('visible');
-  }, 350);
+  }
 }
 
 cover.addEventListener('click', startInvitation, { once:true });
 
 musicBtn.addEventListener('click', async () => {
   if (audio.paused) {
-    try { await audio.play(); musicBtn.textContent = '♫'; }
-    catch(e) {}
+    try {
+      audio.load();
+      await audio.play();
+      musicBtn.textContent = '♫';
+    } catch (e) {
+      console.error('Music playback failed:', e);
+      musicBtn.textContent = '♪';
+    }
   } else {
     audio.pause();
     musicBtn.textContent = '🔇';
